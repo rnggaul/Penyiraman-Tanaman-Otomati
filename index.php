@@ -63,28 +63,7 @@
         }
     </style>
 </head>
-<script>
-    async function fetchData() {
-    try {
-      const response = await fetch('read.php');
-      if (!response.ok) throw new Error("Gagal fetch data");
 
-      const data = await response.json();
-
-      document.getElementById('temperature').textContent = data.temperature;
-      document.getElementById('humidity').textContent = data.humidity;
-      document.getElementById('timestamp').textContent = data.timestamp;
-
-    } catch (error) {
-      console.error("Error:", error);
-      document.getElementById('status').textContent = "Error!";
-    }
-  }
-
-  setInterval(fetchData, 1000); // update setiap 1 detik
-  fetchData(); // jalankan pertama kali
-
-</script>
 <body class="text-gray-100">
   <div class="min-h-screen flex items-center justify-center p-4">
     <div class="w-full max-w-6xl rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-xl bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700/50">
@@ -163,7 +142,7 @@
           </h2>
           <span class="text-xs bg-blue-900/30 text-blue-400 px-2 py-1 rounded-full">Stable</span>
         </div>
-        <p id="temp-humidity" class="text-4xl font-bold text-blue-300 mb-1">65%</p>
+        <p id="temp-humidity" class="text-4xl font-bold text-blue-300 mb-1"></p>
         <p class="text-xs text-gray-400">
           <i class="fas fa-info-circle mr-1"></i>
           Ideal range: 40-70%
@@ -189,5 +168,26 @@
         </p>
       </div>
     </section> 
+    <script>
+    async function fetchData() {
+    try {
+      const response = await fetch('read.php');
+      if (!response.ok) throw new Error("Gagal fetch data");
+
+      const data = await response.json();
+
+      document.getElementById('temp-humidity').textContent = data.humidity;
+      document.getElementById('timestamp').textContent = data.timestamp;
+
+    } catch (error) {
+      console.error("Error:", error);
+      document.getElementById('status').textContent = "Error!";
+    }
+  }
+
+  setInterval(fetchData, 1000); // update setiap 1 detik
+  fetchData(); // jalankan pertama kali
+
+</script>
 </body>
 </html>
